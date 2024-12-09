@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tree Locations with Searchable Dropdown</title>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f7f6;
+      margin: 0;
+      padding: 0;
+    }
+    /* Header */
+    .header {
+      background-color: #2e8b57;
+      color: white;
+      padding: 30px 0;
+      text-align: center;
+      font-size: 36px;
+      font-weight: bold;
+    }
+
+    /* Dropdowns */
+    .dropdown-container {
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      margin: 20px;
+      border-radius: 8px;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    select:focus {
+      border-color: #4CAF50;
+      outline: none;
+    }
+
+    /* Map container */
+    #map {
+      height: 600px;
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #2e8b57;
+      color: white;
+      font-size: 14px;
+    }
+
+    .footer a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .dropdown-container {
+        margin: 10px;
+        padding: 15px;
+      }
+
+      .header {
+        font-size: 28px;
+        padding: 20px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    Tree Locations with Searchable Dropdown
+  </div>
+
+  <div class="dropdown-container">
+    <!-- Dropdown Search for Tree Types -->
+    <select id="treeDropdown" class="w3-select w3-border">
+      <option value="All">All</option>
+    </select>
+  </div>
+
+  <div class="dropdown-container">
+    <!-- Dropdown Search for Tree Heights -->
+    <select id="heightDropdown" class="w3-select w3-border">
+      <option value="All Heights">All Heights</option>
+      <option value="Low">Low (< 10m)</option>
+      <option value="Medium">Medium (10m - 20m)</option>
+      <option value="High">High (> 20m)</option>
+    </select>
+  </div>
+
+  <!-- Map -->
+  <div id="map"></div>
+
+  <div class="footer">
+    <p>&copy; 2024 Tree Locations. All Rights Reserved. <a href="#">Contact Us</a></p>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script>
+    // Define the GeoJSON data
+    var geojsonData = {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [98.351244, 7.903324]
+          },
+          "properties": {
+            "รหัสต้นไม้": "01-001-001",
+            "ชื่อไทย": "ชมพูพันธุ์ทิพย์",
+            "ความสูง (เมตร)": 3.4,
+            "เส้นรอบวง (เมตร)": 0.3,
+            "ปริมาณการดูดซับคาร์บอนไดออกไซด์ (กิโลกรัมต่อไร่)": "ไม่ระบุ",
+            "ปริมาณการปล่อยออกซิเจน (กิโลกรัมต่อไร่)": "ไม่ระบุ"
+          }
+        },
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [98.350655, 7.903397]
+          },
+          "properties": {
+            "รหัสต้นไม้": "01-001-002",
+            "ชื่อไทย": "ชมพูพันธุ์ทิพย์",
+            "ความสูง (เมตร)": 5.2,
+            "เส้นรอบวง (เมตร)": 0.43,
+            "ปริมาณการดูดซับคาร์บอนไดออกไซด์ (กิโลกรัมต่อไร่)": "ไม่ระบุ",
+            "ปริมาณการปล่อยออกซิเจน (กิโลกรัมต่อไร่)": "ไม่ระบุ"
+          }
+        },
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [98.351475, 7.903429]
+          },
+          "properties": {
+            "รหัสต้นไม้": "01-021-001",
+            "ชื่อไทย": "ตีนเป็ด",
+            "ความสูง (เมตร)": 17.22,
+            "เส้นรอบวง (เมตร)": 1.78,
+            "ปริมาณการดูดซับคาร์บอนไดออกไซด์ (กิโลกรัมต่อไร่)": "ไม่ระบุ",
+            "ปริมาณการปล่อยออกซิเจน (กิโลกรัมต่อไร่)": "ไม่ระบุ"
+          }
+        },
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [98.351489, 7.90391]
+          },
+          "properties": {
+            "รหัสต้นไม้": "01-022-001",
+            "ชื่อไทย": "ไทร",
+            "ความสูง (เมตร)": 28.79,
+            "เส้นรอบวง (เมตร)": 50,
+            "ปริมาณการดูดซับคาร์บอนไดออกไซด์ (กิโลกรัมต่อไร่)": "ไม่ระบุ",
+            "ปริมาณการปล่อยออกซิเจน (กิโลกรัมต่อไร่)": "ไม่ระบุ"
+          }
+        },
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [98.359192, 7.898826]
+          },
+          "properties": {
+            "รหัสต้นไม้": "02-014-001",
+            "ชื่อไทย": "ประดู่ป่า",
+            "ความสูง (เมตร)": 8,
+            "เส้นรอบวง (เมตร)": 0.6,
+            "ปริมาณการดูดซับคาร์บอนไดออกไซด์ (กิโลกรัมต่อไร่)": 210.5,
+            "ปริมาณการปล่อยออกซิเจน (กิโลกรัมต่อไร่)": 153.09
+          }
+        },
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [98.35970898, 7.896600395]
+          },
+          "properties": {
+            "รหัสต้นไม้": "02-017-001",
+            "ชื่อไทย": "ราชพฤกษ์",
+            "ความสูง (เมตร)": 4.18,
+            "เส้นรอบวง (เมตร)": 0.34,
+            "ปริมาณการดูดซับคาร์บอนไดออกไซด์ (กิโลกรัมต่อไร่)": 36.78,
+            "ปริมาณการปล่อยออกซิเจน (กิโลกรัมต่อไร่)": 26.75
+          }
+        },
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [98.35914094, 7.898718354]
+          },
+          "properties": {
+            "รหัสต้นไม้": "02-037-001",
+            "ชื่อไทย": "ประดู่บ้าน",
+            "ความสูง (เมตร)": 8,
+            "เส้นรอบวง (เมตร)": 1.42,
+            "ปริมาณการดูดซับคาร์บอนไดออกไซด์ (กิโลกรัมต่อไร่)": 1168.15,
+            "ปริมาณการปล่อยออกซิเจน (กิโลกรัมต่อไร่)": 849.56
+          }
+        },
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [98.35885426, 7.898869116]
+          },
+          "properties": {
+            "รหัสต้นไม้": "02-039-001",
+            "ชื่อไทย": "ส้านใหญ่",
+            "ความสูง (เมตร)": 9.5,
+            "เส้นรอบวง (เมตร)": 0.92,
+            "ปริมาณการดูดซับคาร์บอนไดออกไซด์ (กิโลกรัมต่อไร่)": 579.34,
+            "ปริมาณการปล่อยออกซิเจน (กิโลกรัมต่อไร่)": 421.34
+          }
+        },
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [98.34124543, 7.887972147]
+          },
+          "properties": {
+            "รหัสต้นไม้": "03-002-001",
+            "ชื่อไทย": "ยอป่า",
+            "ความสูง (เมตร)": 13.3,
+            "เส้นรอบวง (เมตร)": 0.22,
+            "ปริมาณการดูดซับคาร์บอนไดออกไซด์ (กิโลกรัมต่อไร่)": 45.79,
+            "ปริมาณการปล่อยออกซิเจน (กิโลกรัมต่อไร่)": 33.3
+          }
+        },
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [98.335533, 7.883767]
+          },
+          "properties": {
+            "รหัสต้นไม้": "03-002-002",
+            "ชื่อไทย": "ยอป่า",
+            "ความสูง (เมตร)": 8.9,
+            "เส้นรอบวง (เมตร)": 1.3,
+            "ปริมาณการดูดซับคาร์บอนไดออกไซด์ (กิโลกรัมต่อไร่)": 1083.11,
+            "ปริมาณการปล่อยออกซิเจน (กิโลกรัมต่อไร่)": 787.72
+          }
+        },
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [98.332415, 7.879975]
+          },
+          "properties": {
+            "รหัสต้นไม้": "03-002-003",
+            "ชื่อไทย": "ยอป่า",
+            "ความสูง (เมตร)": 6.9,
+            "เส้นรอบวง (เมตร)": 0.85,
+            "ปริมาณการดูดซับคาร์บอนไดออกไซด์ (กิโลกรัมต่อไร่)": 848.22,
+            "ปริมาณการปล่อยออกซิเจน (กิโลกรัมต่อไร่)": 612.66
+          }
+        },
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [98.336313, 7.876268]
+          },
+          "properties": {
+            "รหัสต้นไม้": "03-003-001",
+            "ชื่อไทย": "พะยอม",
+            "ความสูง (เมตร)": 11.3,
+            "เส้นรอบวง (เมตร)": 0.65,
+            "ปริมาณการดูดซับคาร์บอนไดออกไซด์ (กิโลกรัมต่อไร่)": 291.5,
+            "ปริมาณการปล่อยออกซิเจน (กิโลกรัมต่อไร่)": 213.8
+          }
+        },
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [98.333332, 7.873503]
+          },
+          "properties": {
+            "รหัสต้นไม้": "03-003-002",
+            "ชื่อไทย": "พะยอม",
+            "ความสูง (เมตร)": 12.6,
+            "เส้นรอบวง (เมตร)": 1.12,
+            "ปริมาณการดูดซับคาร์บอนไดออกไซด์ (กิโลกรัมต่อไร่)": 1163.8,
+            "ปริมาณการปล่อยออกซิเจน (กิโลกรัมต่อไร่)": 848.6
+          }
+        }
+      ]
+    };
+
+    // Initialize the map
+    var map = L.map('map').setView([7.898826, 98.359192], 15);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var geoJsonLayer;
+
+    // Function to populate the tree dropdown
+    function populateDropdown(data) {
+      var dropdown = document.getElementById("treeDropdown");
+      var treeNames = new Set();
+      data.features.forEach(feature => {
+        treeNames.add(feature.properties["ชื่อไทย"]);
+      });
+      treeNames.forEach(name => {
+        var option = document.createElement("option");
+        option.value = name;
+        option.textContent = name;
+        dropdown.appendChild(option);
+      });
+    }
+
+    // Function to filter the map based on selected tree type and height
+    function filterMap(selectedTree, selectedHeight) {
+      if (geoJsonLayer) {
+        map.removeLayer(geoJsonLayer); // Remove existing layer
+      }
+
+      var filteredData = geojsonData.features.filter(function (feature) {
+        var matchesTree = selectedTree === "All" || feature.properties["ชื่อไทย"] === selectedTree;
+        var matchesHeight = selectedHeight === "All Heights" ||
+                             (selectedHeight === "Low" && feature.properties["ความสูง (เมตร)"] < 10) ||
+                             (selectedHeight === "Medium" && feature.properties["ความสูง (เมตร)"] >= 10 && feature.properties["ความสูง (เมตร)"] <= 20) ||
+                             (selectedHeight === "High" && feature.properties["ความสูง (เมตร)"] > 20);
+        return matchesTree && matchesHeight;
+      });
+
+      geoJsonLayer = L.geoJSON({ "type": "FeatureCollection", "features": filteredData }, {
+        onEachFeature: function (feature, layer) {
+          let popupContent = "<strong>รายละเอียดต้นไม้</strong><br>";
+          for (const key in feature.properties) {
+            popupContent += `<strong>${key}</strong>: ${feature.properties[key]}<br>`;
+          }
+          layer.bindPopup(popupContent);
+        },
+        pointToLayer: function (feature, latlng) {
+          return L.circleMarker(latlng, {
+            radius: 8,
+            fillColor: "#ff7800",
+            color: "#ffffff",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+          });
+        }
+      }).addTo(map);
+    }
+
+    // Event listener for tree type dropdown
+    document.getElementById("treeDropdown").addEventListener("change", function () {
+      var selectedTree = this.value;
+      var selectedHeight = document.getElementById("heightDropdown").value;
+      filterMap(selectedTree, selectedHeight);
+    });
+
+    // Event listener for height dropdown
+    document.getElementById("heightDropdown").addEventListener("change", function () {
+      var selectedHeight = this.value;
+      var selectedTree = document.getElementById("treeDropdown").value;
+      filterMap(selectedTree, selectedHeight);
+    });
+
+    // Initial setup
+    populateDropdown(geojsonData);
+    filterMap("All", "All Heights");
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Importance of Air Quality</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #e0e0e0; /* Gray background */
+            position: relative;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px 0;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 15px rgba(183, 181, 181, 0.1);
+            margin-left: 100px; /* Shift content box slightly to the left */
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #3f3f3f;
+        }
+
+        #widget-image {
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            width: 400px; /* Increase image size */
+            height: auto;
+            border-radius: 8px;
+            border: 2px solid rgba(0, 0, 0, 0.1); /* Soft black border */
+            background-color: #848484; /* Light background behind the image */
+            padding: 10px; /* Space between the image and the border */
+        }
+
+        @media (max-width: 1000px) {
+            #widget-image {
+                position: static;
+                display: block;
+                margin: 20px auto;
+                width: 80%; /* Adjust image size for smaller screens */
+            }
+
+            .container {
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        /* Styles for the AQI table container */
+        .aqi-container {
+            margin-bottom: 20px; /* Add space below the table */
+        }
+
+        /* Styles for the AQI table */
+        table {
+            width: 70%; /* Adjusted width for the table */
+            margin: auto; /* Centers the table */
+            margin-bottom: 30px; /* Add space below the table */
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            table-layout: fixed; /* Make columns equal width */
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #ffffff;
+            font-weight: bold;
+        }
+
+        th:nth-child(1), td:nth-child(1) { width: 25%; } /* AQI */
+        th:nth-child(2), td:nth-child(2) { width: 25%; } /* Air Pollution Level */
+        th:nth-child(3), td:nth-child(3) { width: 25%; } /* Health Implications */
+        th:nth-child(4), td:nth-child(4) { width: 25%; } /* Cautionary Statement */
+
+        .good { background-color: #449647; color: white; }
+        .moderate { background-color: #e0cf2e; color: black; }
+        .sensitive { background-color: #cb5c0d; color: white; }
+        .unhealthy { background-color: #d12a10; color: white; }
+        .very-unhealthy { background-color: #8a1c9d; color: white; }
+        .hazardous { background-color: #600c0c; color: white; }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9; /* Zebra striping for rows */
+        }
+
+        tr:hover {
+            background-color: #f1f1f1; /* Highlight row on hover */
+        }
+
+        /* Styles for the message box */
+        .message-box {
+            width: 60%; /* Width of the box */
+            margin: 30px auto; /* Centering the box */
+            padding: 20px; /* Inner padding */
+            background-color: #fff; /* White background */
+            border: 1px solid #ccc; /* Border style */
+            border-radius: 8px; /* Rounded corners */
+            text-align: center; /* Center the text */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+        }
+
+        .message-box a {
+            text-decoration: none; /* Remove underline from link */
+            color: #0066cc; /* Link color */
+            font-weight: bold; /* Bold link text */
+        }
+
+        .message-box a:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>ความสำคัญของต้นไม้</h1>
+        <p>ต้นไม้เป็นทรัพยากรธรรมชาติที่มีความสำคัญอย่างยิ่งต่อการดำรงชีวิตของมนุษย์และสิ่งมีชีวิตอื่น ๆ บนโลกนี้ มันไม่เพียงแต่ให้ความร่มรื่นและความสวยงามเท่านั้น แต่ยังมีบทบาทสำคัญในการรักษาสมดุลของระบบนิเวศและสิ่งแวดล้อม
+
+            หนึ่งในบทบาทที่สำคัญที่สุดของต้นไม้คือการผลิตออกซิเจน ผ่านกระบวนการสังเคราะห์แสง ต้นไม้สามารถดูดซับคาร์บอนไดออกไซด์จากอากาศและปล่อยออกซิเจนออกมา ซึ่งเป็นสิ่งจำเป็นสำหรับการหายใจของมนุษย์และสัตว์ทุกชนิด นอกจากนี้ ต้นไม้ยังช่วยลดปริมาณก๊าซเรือนกระจกในบรรยากาศ ช่วยลดภาวะโลกร้อนที่เกิดจากการสะสมของคาร์บอนไดออกไซด์
+            
+            ต้นไม้ยังมีความสำคัญในการรักษาดินและป้องกันการกัดเซาะของผิวดิน รากของต้นไม้ช่วยยึดดินให้มั่นคง ป้องกันไม่ให้ดินพังทลายลงไปในน้ำในช่วงที่มีฝนตกหนัก โดยเฉพาะในพื้นที่ที่มีการทำเกษตรกรรมหรือพื้นที่ที่มีการบุกรุกของมนุษย์
+            
+            ต้นไม้ยังเป็นที่อยู่อาศัยของสัตว์นานาชนิด โดยเฉพาะในป่าฝนเขตร้อนที่เป็นแหล่งหลบภัยของสัตว์ป่าหลายพันธุ์ นอกจากนี้ ต้นไม้ยังมีบทบาทในการเพิ่มความหลากหลายทางชีวภาพ ช่วยให้สัตว์และพืชที่อาศัยอยู่ในป่ามีแหล่งอาหารและที่อยู่อาศัย
+            
+            ในแง่ของเศรษฐกิจ ต้นไม้ยังมีมูลค่าทางเศรษฐกิจสูง เช่น การใช้ไม้ในอุตสาหกรรมก่อสร้าง การเกษตร และการผลิตสารเคมีจากพืช ต้นไม้บางชนิดยังให้ผลผลิตจากผลไม้หรือยางพาราที่ใช้ในอุตสาหกรรมต่างๆ อีกด้วย
+            
+            ในด้านสุขภาพ การอยู่ใกล้ต้นไม้หรือธรรมชาติมีประโยชน์ต่อจิตใจ ช่วยลดความเครียดและเพิ่มความผ่อนคลาย ส่งผลดีต่อสุขภาพจิตและร่างกายของมนุษย์
+            
+            ดังนั้น ต้นไม้จึงเป็นทรัพยากรที่มีความสำคัญต่อโลกและมนุษย์ในหลากหลายมิติ และเราควรให้ความสำคัญในการอนุรักษ์และดูแลต้นไม้เพื่อให้สามารถรักษาประโยชน์ที่มันให้แก่เราได้อย่างยั่งยืน</p>
+    </div>
+
+    <img src="trees-3818212_1280.jpg" id="widget-image" alt="Trees" style="width: 50%; max-width: 400px;">
+
+    <!-- Message Box -->
+    <div class="message-box">
+        <p>แผนที่แสดงตำแหน่งต้นไม้ <a href="map.html">Map showing the location of trees</a>.</p>
+        <p>กราฟแสดงค่าปริมาณการดูดซับคาร์บอนไดออกไซด์ของต้นไม้<a href="chart.html"> Interactive Tree Chart</a>.</p>
+    </div>
+
+</body>
+</html>

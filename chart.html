@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Tree Chart</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h1 style="text-align: center;">Interactive Tree Chart</h1>
+  <canvas id="treeChart" width="800" height="400"></canvas>
+  <script>
+    // ข้อมูล JSON
+    const treeData = [
+      { name: "ชมพูพันธุ์ทิพย์", co2: 0 },
+      { name: "ตีนเป็ด", co2: 0 },
+      { name: "ไทร", co2: 0 },
+      { name: "หูกวาง", co2: 0 },
+      { name: "ประดู่ป่า", co2: 210.5 },
+      { name: "ราชพฤกษ์", co2: 36.78 },
+      { name: "ประดู่บ้าน", co2: 1168.15 },
+      { name: "ส้านใหญ่", co2: 579.34 },
+      { name: "ยอป่า (1)", co2: 45.79 },
+      { name: "ยอป่า (2)", co2: 1083.11 },
+      { name: "ยอป่า (3)", co2: 366.8 },
+      { name: "ยอป่า (4)", co2: 1386.59 },
+      { name: "ยอป่า (5)", co2: 364.89 }
+    ];
+
+    // ดึงข้อมูลชื่อและค่า CO2
+    const labels = treeData.map(tree => tree.name);
+    const co2Values = treeData.map(tree => tree.co2);
+
+    // สร้างกราฟ
+    const ctx = document.getElementById('treeChart').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels, // ชื่อของต้นไม้
+        datasets: [{
+          label: 'CO₂ Absorption (kg/ไร่)',
+          data: co2Values, // ค่า CO2
+          backgroundColor: 'rgba(75, 192, 192, 0.5)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          tooltip: {
+            enabled: true,
+            callbacks: {
+              label: function(context) {
+                return `${context.raw} kg CO₂`;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'CO₂ Absorption (kg/ไร่)'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Tree Name'
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

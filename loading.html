@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Loading...</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .loading-container {
+            text-align: center;
+        }
+        .loading-container img {
+            width: 100px; /* ปรับขนาดของรูปการ์ตูนต้นไม้ */
+            height: auto;
+        }
+        .loading-container p {
+            font-size: 1.5em;
+            margin-top: 20px;
+            color: #333;
+        }
+    </style>
+    <script>
+        // Redirect to the target page after 2 seconds
+        setTimeout(function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const page = urlParams.get('page'); // รับชื่อหน้าเป้าหมายจากพารามิเตอร์
+            window.location.href = page; // เปลี่ยนหน้า
+        }, 2000);
+    </script>
+</head>
+<body>
+
+    <div class="loading-container">
+        <!-- รูปการ์ตูนต้นไม้ (คุณสามารถแทนที่ URL นี้ด้วยลิงก์ไปยังรูปที่คุณต้องการ) -->
+        <img src="tree-cartoon.png" alt="Loading Tree">
+        <p>กำลังโหลด... โปรดรอสักครู่</p>
+    </div>
+
+</body>
+</html>
